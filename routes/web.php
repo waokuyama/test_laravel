@@ -3,10 +3,13 @@
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\member;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Livewire\LikeButton;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,8 +82,13 @@ Route::get('/member_top1', [member::class, 'member_top1'])->name('member_top1');
 //マイページ
 Route::get('/member_mypage', [member::class, 'member_mypage'])->name('member_mypage');
 
+
 //投稿ページ
 Route::get('/member_post', [member::class, 'member_post'])->name('member_post');
+
+//投稿内容
+Route::post('/report_post', [member::class, 'report_post'])->name('report_post');
+
 
 //閲覧ページ
 Route::get('/member_browse', [member::class, 'member_browse'])->name('member_browse');
@@ -93,6 +101,20 @@ Route::get('/member_mypost', [member::class, 'member_mypost'])->name('member_myp
 
 //お問い合わせページ
 Route::get('/member_form', [member::class, 'member_form'])->name('member_form');
+
+//お問い合わせ送信ページ
+Route::post('/member_contacts',[ContactController::class, 'member_contacts'])->name('member_contacts');
+
+//問題テスト
+Route::get('/test_test', [ContactController::class, 'test_test'])->name('test_test');
+
+//いいね機能練習
+Route::post('/like/{postId}',[LikeController::class,'store']);
+Route::post('/unlike/{postId}',[LikeController::class,'destroy']);
+
+
+
+
 
 //管理者用トップページ
 Route::get('/admin_top', [member::class, 'admin_top'])->name('admin_top');
@@ -108,10 +130,14 @@ Route::get('/admin_bad', [member::class, 'admin_bad'])->name('admin_bad');
 
 
 
+
+
 //テストページ（機能テスト）
 Route::get('/test', [member::class, 'test'])->name('test');
 Route::post('/posts/{id}/like', [member::class, 'toggleLike']);
 
+//リレーショナル値の取得
+Route::get('/member_gets', [member::class, 'member_gets'])->name('member_gets');
 
 /*
 |--------------------------------------------------------------------------
