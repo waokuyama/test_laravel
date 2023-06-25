@@ -1,4 +1,5 @@
 <p>フレンド一覧</p>
+ <p>{{ $user->id }}</p>
 <x-members_header></x-members_header>
 
 
