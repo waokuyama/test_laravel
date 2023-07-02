@@ -1,5 +1,4 @@
-<p>投稿ページ</p>
-{{ $user->id }}
+{{-- <p>投稿ページ</p> --}}
 <x-members_header></x-members_header>
 <main class="bg-gray-100">
   <form action="{{ route('report_post')}}" method="POST">

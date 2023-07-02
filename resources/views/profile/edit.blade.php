@@ -1,7 +1,5 @@
 {{-- マイページ画面 --}}
-{{-- {{ $user->name }} --}}
-{{ $user->id }}
-{{ $user->name }}
+{{-- <p>場所:profile>partials>editにある</p> --}}
 
 
 
@@ -19,11 +17,18 @@
                     </div>
                 </div>
 
+                
                 <div class="w-3/12 p-4 ml-20 bg-white shadow sm:p-8 sm:rounded-lg">
-                    <div class="max-w-xl">
-                        <a href="{{ 'member_mypost' }}">自分の投稿一覧</a>
+                    <div class="flex flex-col justify-center mtー4">
+                        <a href="{{ 'member_mypost' }}" class="text-lg font-semibold text-gray-800 hover:text-blue-600">自分の投稿一覧</a>
+                    </div>
+                    <div class="mt-32">
+                        <a href="{{ route('member_like') }}" class="text-lg font-semibold text-gray-800 hover:text-blue-600">お気に入り一覧</a>  
                     </div>
                 </div>
+
+            
+                {{-- ここまで試し --}}
             </div>
 
             <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">

@@ -28,7 +28,8 @@ class AdminLoginController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard')->with([
+            // return redirect()->route('admin.dashboard')->with([
+            return redirect()->route('admin_top')->with([
                 'login_msg' => 'ログインしました。',
             ]);
         }

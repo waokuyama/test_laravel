@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Post;
 use App\Models\Like;
+use App\Models\Bad;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,6 +72,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    //外部キーも一緒に削除するメソッド　削除できた
+    protected static function boot(){
+        parent::boot();
+        static::deleting(function ($user) {
+            $user->posts()->delete();
+        });
+    }
 
 
     //いいね機能練習
@@ -104,6 +112,23 @@ class User extends Authenticatable
          }
        }
 
+    // bad機能追加
+    public function bads()
+    {
+        return $this-> belongsToMany('App\Models\Post', 'bads','user_id','post_id')->withTimestamps();
+    }
 
+    public function isbad($postId)
+    {
+        return $this->bads()->where('post_id',$postId)->exists();
+    }
 
+    public function bad($postId)
+    {
+        if($this->isBad($postId)){
+            $this->bads()->detach($postId);
+        }else {
+            $this->bads()->attach($postId);
+        }
+    }
 }

@@ -5,7 +5,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\member;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\BadController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\PasswordController;
@@ -93,11 +95,24 @@ Route::post('/report_post', [member::class, 'report_post'])->name('report_post')
 //閲覧ページ
 Route::get('/member_browse', [member::class, 'member_browse'])->name('member_browse');
 
+//選択したジャンルの値を取得する
+Route::get('/member_genre/{name}', [member::class, 'member_genre'])->name('member_genre');
+
+
 //フレンド一覧ページ
 Route::get('/member_friend', [member::class, 'member_friend'])->name('member_friend');
 
 //自分の投稿一覧
 Route::get('/member_mypost', [member::class, 'member_mypost'])->name('member_mypost');
+
+//自分の投稿一覧ジャンルの値を取得
+Route::get('/mypost_genre/{name}',[member::class, 'mypost_genre'])->name('mypost_genre');
+
+//投稿削除
+Route::delete('/post_delete/{id}', [member::class, 'member_delete'])->name('post_delete');
+
+//管理者画面から削除
+Route::delete('/admin_delete/{id}',[member::class,  'admin_delete'])->name('admin_delete');
 
 //お問い合わせページ
 Route::get('/member_form', [member::class, 'member_form'])->name('member_form');
@@ -112,6 +127,12 @@ Route::get('/test_test', [ContactController::class, 'test_test'])->name('test_te
 Route::post('/like/{postId}',[LikeController::class,'store']);
 Route::post('/unlike/{postId}',[LikeController::class,'destroy']);
 
+//bad機能
+// Route::post('/bad/{buttonId}',[LikeController::class, 'bad']);
+Route::get('/bad/{buttonId}', [LikeController::class, 'bad'])->name('bad');
+
+//いいね一覧
+Route::get('/member_like', [member::class, 'member_like'])->name('member_like');
 
 
 
@@ -120,13 +141,22 @@ Route::post('/unlike/{postId}',[LikeController::class,'destroy']);
 Route::get('/admin_top', [member::class, 'admin_top'])->name('admin_top');
 
 //管理者用お問い合わせ一覧ページ
-Route::get('/admin_inquiry', [member::class, 'admin_inquiry'])->name('admin_inquiry');
+// Route::get('/admin_inquiry', [member::class, 'admin_inquiry'])->name('admin_inquiry');
+Route::get('/admin_inquiry', [ContactController::class, 'admin_inquiry'])->name('admin_inquiry');
+
+//お問い合わせジャンル選択
+Route::get('/admin_genre/{id}', [ContactController::class, 'admin_genre'])->name('admin_genre');
+
+//管理者お問い合わせステータス変更
+Route::put('/contacts_statsu/{id}', [ContactController::class,'contacts_statsu'])->name('contacts_statsu');
 
 //管理者用申告一覧ページ
 Route::get('/admin_report', [member::class, 'admin_report'])->name('admin_report');
 
+
 //bad一覧
-Route::get('/admin_bad', [member::class, 'admin_bad'])->name('admin_bad');
+Route::get('/admin_bad', [PostController::class, 'admin_bad'])->name('admin_bad');
+
 
 
 
@@ -138,6 +168,11 @@ Route::post('/posts/{id}/like', [member::class, 'toggleLike']);
 
 //リレーショナル値の取得
 Route::get('/member_gets', [member::class, 'member_gets'])->name('member_gets');
+
+//グラフ表示テストページ
+Route::get('/chartjs', function(){
+    return view('members.chartjs');
+});
 
 /*
 |--------------------------------------------------------------------------

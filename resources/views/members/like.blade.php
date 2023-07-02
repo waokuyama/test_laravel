@@ -1,23 +1,12 @@
 
-{{-- 観覧ページ --}}
-{{-- {{ dd($user) }} --}}
-{{-- @foreach($user as $users)
-<p>{{ $users->name }}</p>
-<p>{{ $users->title }}</p>
-<p>{{ $users->article }}</p>
-<p>{{ $users->genre }}</p>
-<p>{{ $loop->index }}</p>
-<p>{{ $users->created_at }}</p>
-@endforeach --}}
- 
+
+
+
+
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {{-- ここがgood機能 --}}
-    <script src="{{ asset('/js/main.js') }}"></script>
-    {{-- ここにbad機能記述する --}}
-    <script src="{{ asset('/js/bad.js') }}"></script>
-    
+    <script src="{{ asset('/js/sub.js') }}"></script>
   </head>
 
 
@@ -55,35 +44,36 @@
 <x-members_header></x-members_header>
 
 <main>
+
+
 {{-- ナビゲーション部分 --}}
 <div class="text-gray-600 body-font">
     <div class="container flex flex-col flex-wrap items-center p-5 mx-auto md:flex-row">
       <nav class="flex flex-wrap items-center justify-center text-base md:ml-auto md:mr-auto">
-        <a href="{{ route('member_browse') }}" class="mr-5 hover:text-gray-900">全部</a>
-        {{-- <a href="{{ route('member_genre', ['test' => '生活']) }}" name="生活" class="mr-5 hover:text-gray-900">生活</a> --}}
-        <a href="{{ route('member_genre', ['name' => '生活']) }}" class="mr-5 hover:text-gray-900">生活</a>
-        <a href="{{ route('member_genre', ['name' => '恋愛']) }}" class="mr-5 hover:text-gray-900">恋愛</a>
-        <a href="{{ route('member_genre', ['name' => '趣味']) }}" class="mr-5 hover:text-gray-900">趣味</a>
-        <a href="{{ route('member_genre', ['name' => '仕事']) }}" class="mr-5 hover:text-gray-900">仕事</a>
+        <a class="mr-5 hover:text-gray-900">全部</a>
+        <a class="mr-5 hover:text-gray-900">生活</a>
+        <a class="mr-5 hover:text-gray-900">恋愛</a>
+        <a class="mr-5 hover:text-gray-900">趣味</a>
+        <a class="mr-5 hover:text-gray-900">仕事</a>
       </nav>
     </div>
 </div>
 
 {{-- 投稿一覧 --}}
 <section class="container px-4 mx-auto">
-    <h2 class="text-lg font-medium text-gray-800 dark:text-white">投稿一覧</h2>
+    <h2 class="text-lg font-medium text-gray-800 dark:text-white">お気に入り一覧</h2>
 
     <div class="flex flex-col mt-6">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-@foreach($user as $users)
+@foreach ($likedPosts as $post)
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
                                 <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <button class="flex items-center gap-x-3 focus:outline-none">
-                                        <span>投稿者</span>
+                                        <span>投稿日</span>
                                     </button>
                                 </th>
 
@@ -112,33 +102,31 @@
                             <tr>
                                 <td class="px-4 py-4 text-sm font-medium whitespace-normal" style="width: 200px;">
                                     <div>
-                                        <h2 class="font-medium text-gray-800 dark:text-white ">{{ $users->name }}</h2>
+                                        <h2 class="font-medium text-gray-800 dark:text-white ">{{ $post->created_at }}</h2>
                                     </div>
                                 </td>
                                 <td class="text-sm font-medium whitespace-normal" style="width: 200px;">
                                     <div class="inline text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        {{ $users->title }}
+                                        {{ $post->title }}
                                     </div>
                                 </td>
                                 <td class="text-sm whitespace-nowrap">
                                     <div style="margin-left: 10px;">
                                         <h4 class="text-center text-gray-700 dark:text-gray-200">
-                                            <button onclick="like({{ $users->id }})" id="{{ $users->id }}">good</button>
+                                            <button onclick="like({{ $post->id }})" id={{ $post->id}} >good済</button>
                                         </h4>
                                     </div>
                                 </td>
                                 <td class="text-sm whitespace-normal" style="width: 100px;">
                                     <div>
-                                        <h4 class="text-center text-gray-700 dark:text-gray-200">
-                                            {{-- <button onclick="bad({{ $users->id }})" id="{{ $users->id }}">bad</button> --}}
-                                            <button id="{{ $users->id }}" class="btn" onclick="changeText(this)">bad</button>
-                                        </h4>
+                                        <h4 class="text-center text-gray-700 dark:text-gray-200">bad合計</h4>
                                     </div>
                                 </td>
-                                
                                 <td class="text-sm whitespace-normal" style="width: 150px;">
                                     <div>
-                                        <h4 class="text-gray-700 dark:text-gray-200">{{ $users->created_at }}</h4>
+                                        <h4 class="text-gray-700 dark:text-gray-200">投稿日</h4>
+                                        
+
                                     </div>
                                 </td>
                             </tr>
@@ -152,8 +140,7 @@
     {{-- 投稿内容の表示と非表示 --}}
     <button class="accordion" onclick="togglePanel()">投稿内容</button>
                 <div class="panel">
-                    {{-- {{ $users->article }} --}}
-                    {!! nl2br(htmlspecialchars($users->article)) !!}
+                    {!! nl2br(htmlspecialchars($post->article)) !!}
                 </div>
                 
                 <script>
@@ -174,7 +161,7 @@
                     });
                 </script>
 @endforeach
-{{ $user->links('pagination::pagination') }}
+{{ $likedPosts ->links('pagination::pagination') }}
     
 </section>
 
