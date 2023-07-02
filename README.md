@@ -2,36 +2,33 @@
 PHP自作
 
 ## 概要
-吹奏楽の演奏会の宣伝サイトを作成しました。
+情報共有アプリを作成いたしました
 
-主催者ユーザと一般ユーザに分け、
+管理者と一般ユーザーに分けて
 それぞれでログインできるようにしています。
 
-
+管理者が企業
+利用者が一般ユーザー
 
 ## 使い方
-主催者ユーザ
+管理者
+bad記事の削除
+お問い合わせ投稿の管理
 
-演奏会の登録・更新・削除、送られたコメント・メッセージが見れるようにしています。
 
-テストアカウント：
+テストアカウント：bbb
 
-メールアドレス→syusai@com.jp
+メールアドレス→b@b.b
 
-パスワード→syusaitest
+パスワード→bbbbbbbb
 
 一般ユーザ
+登録、編集、削除ができます
+投稿、投稿の削除、いいね機能、bad機能の登録ができます
 
-演奏会検索、お気に入り登録、演奏会に行った後評価・コメント登録ができるようになっています。
+テストアカウント：aaa
 
-テストアカウント：
+メールアドレス→a@a.a
 
-メールアドレス→test.test@com.jp
+パスワード→aaaaaaaa
 
-パスワード→Passtest
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-“# test”
-# test_laravel
-# test_laravel
-# laravel_01
-# laravel_01
